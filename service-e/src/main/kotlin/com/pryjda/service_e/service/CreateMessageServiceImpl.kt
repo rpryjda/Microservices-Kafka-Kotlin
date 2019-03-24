@@ -27,8 +27,9 @@ class CreateMessageServiceImpl(@Autowired val outStreamCreatedMessage: OutStream
         val anyNumber: String = "some number"
         var messageResponse: MessageResponse = MessageResponse(createMessageCommand.messageRequest.name,
                 createMessageCommand.messageRequest.priority,
-                anyNumber,
-                additionalText)
+                createMessageCommand.messageRequest.emitterNumber,
+                additionalText,
+                anyNumber)
 
         return CreatedMessageEvent(messageResponse, createMessageCommand.uniqueNumber)
     }
