@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service
 import java.util.logging.Logger
 
 @Service
-class CreateMessageServiceImpl(@Autowired val outStreamCreatedMessage: OutStreamCreatedMessage) : CreateMessageService {
+class CreateMessageServiceImpl(@Autowired val outStreamCreatedMessage: OutStreamCreatedMessage,
+                               @Autowired val createPdfService: CreatePdfService) : CreateMessageService {
 
     val LOGGER: Logger = Logger.getLogger(CreateMessageServiceImpl::class.toString())
 
@@ -30,7 +31,7 @@ class CreateMessageServiceImpl(@Autowired val outStreamCreatedMessage: OutStream
                 createMessageCommand.messageRequest.emitterNumber,
                 additionalText,
                 anyNumber)
-
-        return CreatedMessageEvent(messageResponse, createMessageCommand.uniqueNumber)
+        val output = createPdfService.createPdf()
+        return CreatedMessageEvent(messageResponse, createMessageCommand.uniqueNumber, output)
     }
 }

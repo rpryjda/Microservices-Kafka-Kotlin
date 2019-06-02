@@ -2,10 +2,10 @@ package com.pryjda.service_c.controller
 
 import com.pryjda.service_c.model.MessagePriority
 import com.pryjda.service_c.model.MessageRequest
-import com.pryjda.service_c.model.MessageResponse
 import com.pryjda.service_c.service.CreateMessageService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.core.io.InputStreamResource
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.async.DeferredResult
@@ -17,8 +17,8 @@ class CreateMessageController(@Autowired @Qualifier("create") val createMessageS
 
     val LOGGER: Logger = Logger.getLogger(CreateMessageController::class.toString())
 
-    @PostMapping("/messages")
-    fun createMessage(@RequestBody messageRequest: MessageRequest): DeferredResult<ResponseEntity<MessageResponse>> {
+    @PostMapping("/messages", produces = ["application/pdf"])
+    fun createMessage(@RequestBody messageRequest: MessageRequest): DeferredResult<ResponseEntity<InputStreamResource>> {
         LOGGER.info("sending deferred object")
         LOGGER.info("got messageRequest: ${messageRequest.toString()}")
 
